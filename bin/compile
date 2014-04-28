@@ -231,6 +231,20 @@ puts-step "Installing dependencies using Pip ($PIP_VERSION)"
 if [ -f circus.ini ]; then
   puts-step "Attempting to install Circus"
   /app/.heroku/python/bin/pip install circus --exists-action=i --src=./.heroku/src --allow-all-external  | cleanup | indent
+  # Can I edit /start here instead of a plugin?
+  # Let's find out.
+  # Should probably put this in ($BIN_DIR/steps/hooks/post_compile)
+  cat >/start <<EOL
+#!/bin/bash
+
+set -e
+export HOME=/app
+for file in \$HOME/.profile.d/*; do source \$file; done
+hash -r
+cd \$HOME
+
+circusd circus.ini
+EOL
 fi
 
 
