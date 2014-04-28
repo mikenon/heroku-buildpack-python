@@ -225,6 +225,15 @@ puts-step "Installing dependencies using Pip ($PIP_VERSION)"
 [ ! "$FRESH_PYTHON" ] && bpwatch stop pip_install
 [ "$FRESH_PYTHON" ] && bpwatch stop pip_install_first
 
+###
+# Customized
+###
+if [ -f circus.ini ]; then
+  puts-step "Attempting to install Circus"
+  /app/.heroku/python/bin/pip install circus --exists-action=i --src=./.heroku/src --allow-all-external  | cleanup | indent
+fi
+
+
 # Django collectstatic support.
 bpwatch start collectstatic
   sub-env $BIN_DIR/steps/collectstatic
