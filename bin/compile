@@ -234,17 +234,16 @@ if [ -f circus.ini ]; then
   # Can I edit /start here instead of a plugin?
   # Let's find out.
   # Should probably put this in ($BIN_DIR/steps/hooks/post_compile)
-  cat >/start <<EOL
-#!/bin/bash
-
-set -e
-export HOME=/app
-for file in \$HOME/.profile.d/*; do source \$file; done
-hash -r
-cd \$HOME
-
-circusd circus.ini
-EOL
+  # Nope
+#  cat >/start <<EOL
+# #!/bin/bash
+# set -e
+# export HOME=/app
+# for file in \$HOME/.profile.d/*; do source \$file; done
+# hash -r
+# cd \$HOME
+# circusd circus.ini
+# EOL
 fi
 
 
